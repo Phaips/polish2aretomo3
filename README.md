@@ -197,7 +197,6 @@ results_cmd2/
 └── ...
 ```
 
-
 ## License
 
 MIT License - see LICENSE file for details.
