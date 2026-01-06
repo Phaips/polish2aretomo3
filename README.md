@@ -11,11 +11,11 @@ This utility integrates RELION5 tomography polishing per-tilt alignment updates 
 For each `Position_*` tilt series:
 
 1. **Reads** the original AreTomo3 alignment file: `Position_X.aln`
-2. **Reads** the RELION polishing STAR file: `Position_X_projections.star` (configurable suffix)
-3. **Matches** RELION tilts to AreTomo tilts by angle using dynamic programming (handles removed tilts)
+2. **Reads** the RELION polishing STAR file: `Position_X_projections.star`
+3. **Matches** RELION tilts to AreTomo tilts by angle (handles removed tilts)
 4. **Updates** the alignment file:
-   - `ROT` → replaced with RELION `_rlnTomoZRot`
-   - `TILT` → replaced with RELION `_rlnTomoYTilt`
+   - `ROT` → replaced with RELION `rlnTomoZRot`
+   - `TILT` → replaced with RELION `rlnTomoYTilt`
    - `TX/TY` → replaced with RELION shifts converted from Ångströms to unbinned pixels:
      ```
      TX_new = XShiftAngst / pixel_size
@@ -28,18 +28,6 @@ For each `Position_*` tilt series:
    - Runs AreTomo3 `-Cmd 2` with outputs to `results/<Position>/cmd2/`
    - Cleans up temporary files
 
-No large `.mrc` stacks are copied or moved.
-
-## Installation
-
-### Requirements
-
-- Python 3.7+
-- `starfile` package
-
-```bash
-pip install starfile
-```
 
 ## Input Requirements
 
@@ -56,8 +44,6 @@ aretomo3/
 ├── Position_1_Vol.mrc
 ├── Position_1_ODD.mrc
 ├── Position_1_EVN.mrc
-├── Position_2.aln
-├── Position_2.mrc
 └── ...
 ```
 
@@ -70,7 +56,7 @@ aretomo3/
 
 Typical layout:
 ```
-Polish/job001/temp/
+Polish/jobXXX/temp/
 ├── Position_1_projections.star  # Required
 ├── Position_1_motion.star
 ├── Position_1_positions.star
@@ -84,8 +70,8 @@ Polish/job001/temp/
 
 ```bash
 python polish2aretomo3.py \
-  -i /path/to/aretomo3/ \
-  -p /path/to/relion/Polish/job001/temp/ \
+  -i path/to/aretomo3/output/ \
+  -p path/to/relion/Polish/jobXXX/temp/ \
   --pixel-size 2.42 \
   --binning 4 \
   --vol-z 2048
@@ -106,7 +92,7 @@ python polish2aretomo3.py \
   --pixel-size 2.42 \
   --binning 4 \
   --vol-z 2048 \
-  --include "Position_22*"
+  --include "Position_2*"
 
 # Exclude specific positions
 python polish2aretomo3.py \
@@ -115,10 +101,10 @@ python polish2aretomo3.py \
   --pixel-size 2.42 \
   --binning 4 \
   --vol-z 2048 \
-  --exclude "Position_7,Position_7_2"
+  --exclude "Position_1,Position_2"
 ```
 
-### Enable CTF Correction
+### Enable CTF Correction (recommended)
 
 ```bash
 python polish2aretomo3.py \
@@ -211,23 +197,11 @@ results_cmd2/
 └── ...
 ```
 
-## Notes & Caveats
-
-- **Coordinate Systems**: RELION shifts are in Ångströms and converted to unbinned pixels for the `.aln` file
-- **Tilt Matching**: Uses dynamic programming to match tilts by angle, handling cases where RELION removed bad tilts
-- **Temporary Files**: The SLURM script creates temporary working directories and cleans them up automatically
-- **Module Loading**: The generated script assumes `IMOD` and `AreTomo3` modules are available
 
 ## License
 
 MIT License - see LICENSE file for details.
 
-## Citation
-
-If you use this tool in your research, please cite:
-- RELION: [Zivanov et al. (2022)](https://doi.org/10.7554/eLife.83722)
-- AreTomo3: [Zheng et al. (2024)](https://doi.org/10.1016/j.jsb.2024.108073)
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
+Contributions are very welcome! Please feel free to submit issues or pull requests.
