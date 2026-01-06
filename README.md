@@ -1,6 +1,6 @@
 # polish2aretomo3
 
-Update AreTomo3 alignment files with RELION5 polishing results and generate a SLURM script to run AreTomo3 reconstruction (Cmd 2).
+Update [AreTomo3](https://github.com/czimaginginstitute/AreTomo3) alignment files with [RELION5](https://github.com/3dem/relion/tree/ver5.0) Bayesian polishing results and generate a SLURM script to realign tomograms using Cmd 2.
 
 ## Overview
 
