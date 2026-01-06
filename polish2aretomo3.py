@@ -3,7 +3,7 @@
 Update AreTomo3 alignment files with RELION polished shifts and generate
 a SLURM script to run AreTomo3 reconstruction (Cmd 2).
 
-This script converts RELION polish per-tilt shifts from Ångströms to AreTomo3's
+This script converts RELION polish per-tilt shifts from Ångstroms to AreTomo3's
 expected pixel coordinates and updates the alignment files accordingly.
 """
 
@@ -45,8 +45,8 @@ class ProjectionRow:
     """Represents one tilt from a RELION polish _projections.star file."""
     ytilt: float
     zrot: float
-    dx_ang: float  # X shift in Ångströms
-    dy_ang: float  # Y shift in Ångströms
+    dx_ang: float  # X shift in Ångstroms
+    dy_ang: float  # Y shift in Ångstroms
 
 
 def discover_tilt_series(directory: Path) -> List[str]:
@@ -218,7 +218,7 @@ def write_updated_aln(
         # Update with RELION polish values
         proj = proj_rows[matches[row_index]]
         
-        # Convert Ångströms to unbinned pixels
+        # Convert Ångstroms to unbinned pixels
         tx_new = (proj.dx_ang * xshift_sign) / pixel_size
         ty_new = (proj.dy_ang * yshift_sign) / pixel_size
         
@@ -408,7 +408,7 @@ def main():
         "--pixel-size",
         type=float,
         required=True,
-        help="Unbinned pixel size in Ångströms"
+        help="Unbinned pixel size in Ångstroms"
     )
     parser.add_argument(
         "--binning",
@@ -453,7 +453,7 @@ def main():
         "--ctf-lowpass",
         type=int,
         default=15,
-        help="CTF correction lowpass filter in Ångströms (default: 15)"
+        help="CTF correction lowpass filter in Ångstroms (default: 15)"
     )
     
     # Microscope parameters
