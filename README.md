@@ -82,6 +82,19 @@ Then submit the job:
 sbatch results_cmd2/submit_cmd2.sh
 ```
 
+### Enable CTF Correction (recommended)
+
+```bash
+python polish2aretomo3.py \
+  -i aretomo3/ \
+  -p polish/temp/ \
+  --pixel-size 2.42 \
+  --binning 4 \
+  --vol-z 2048 \
+  --ctf-correction \
+  --ctf-lowpass 15
+```
+
 ### Filter Specific Positions
 
 ```bash
@@ -102,19 +115,6 @@ python polish2aretomo3.py \
   --binning 4 \
   --vol-z 2048 \
   --exclude "Position_1,Position_2"
-```
-
-### Enable CTF Correction (recommended)
-
-```bash
-python polish2aretomo3.py \
-  -i aretomo3/ \
-  -p polish/temp/ \
-  --pixel-size 2.42 \
-  --binning 4 \
-  --vol-z 2048 \
-  --ctf-correction \
-  --ctf-lowpass 15
 ```
 
 ## Command-Line Options
